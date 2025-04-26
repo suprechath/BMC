@@ -1,0 +1,102 @@
+/* Import Google font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #4FA3F7, #A4D4A9); /* Gradient color for a fresh and calming effect */
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 430px;
+  width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Slightly softer shadow for a calm feel */
+  padding: 2rem;
+}
+
+.container .forgot-password-form,
+.container .registration {
+  display: none;
+}
+
+.form header {
+  font-size: 2.2rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333; /* Dark text for headers */
+}
+
+.form input {
+  height: 60px;
+  width: 100%;
+  padding: 0 15px;
+  font-size: 17px;
+  margin-bottom: 1.3rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  background-color: #f7f7f7; /* Light background for input fields */
+  color: #333;
+}
+
+.form input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.form a.forgot-password {
+  font-size: 16px;
+  color: #4FA3F7; /* Matching the background color for links */
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.form a.forgot-password:hover {
+  text-decoration: underline;
+  color: #2A8FD1; /* Slightly darker blue for hover effect */
+}
+
+.form input.button {
+  color: #fff;
+  background: linear-gradient(135deg, #4FA3F7, #A4D4A9); /* ใช้ gradient ที่เหมือนกับ body */
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-top: 1.7rem;
+  cursor: pointer;
+  transition: 0.4s;
+  border: none; /* กำจัดเส้นขอบที่ไม่จำเป็น */
+  border-radius: 6px; /* ใช้ขอบโค้งเหมือนฟอร์ม */
+}
+
+.form input.button:hover {
+  background: linear-gradient(135deg, #3F8BC7, #8CC9A2); /* เปลี่ยนเป็น gradient ที่มืดขึ้นเล็กน้อยเมื่อ hover */
+}
+
+.signup {
+  font-size: 17px;
+  text-align: center;
+}
+
+.signup label {
+  color: #4FA3F7;
+  cursor: pointer;
+}
+
+.signup label:hover {
+  text-decoration: underline;
+}
