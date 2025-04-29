@@ -1,0 +1,193 @@
+/* --- Previous styles from demo2.css remain the same --- */
+body {
+  font-family: 'Sarabun', sans-serif;
+  background-color: #f0f7f6;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align top */
+  min-height: 100vh;
+}
+
+.assessment-container {
+  max-width: 700px; /* Wider for potentially long questions */
+  width: 100%;
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 20px; /* Add some margin at the top */
+  margin-bottom: 20px; /* Add margin at bottom */
+}
+
+/* Styles for Steps */
+.step {
+  animation: fadeIn 0.5s ease-in-out;
+}
+.step.active { display: block; }
+.step.hidden { display: none; }
+.question-group.active { display: block; } /* ทำให้ div ที่ active แสดงผล */
+.question-group.hidden { display: none; }  /* ทำให้ div ที่ hidden ถูกซ่อน */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h1, h2 {
+  color: #005f73;
+  text-align: center;
+  margin-bottom: 20px;
+}
+h3 {
+  color: #00796b;
+  margin-bottom: 5px;
+}
+
+p { margin-bottom: 15px; color: #555; }
+ul { margin-bottom: 20px; padding-left: 20px; }
+li { margin-bottom: 8px; }
+
+button {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: #0a9396;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  font-family: 'Sarabun', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  margin-top: 15px;
+  margin-right: 10px;
+}
+button:hover { background-color: #00796b; }
+button:active { transform: scale(0.98); }
+button:disabled { background-color: #cccccc; cursor: not-allowed; }
+
+/* Consent Box */
+.consent-box { background-color: #eef; padding: 15px; border-radius: 5px; margin: 20px 0; border: 1px solid #cce;}
+.consent-box label { display: flex; align-items: center; cursor: pointer; }
+#consent-checkbox { margin-right: 10px; width: 18px; height: 18px; }
+
+/* Assessment Form specific styles */
+.instruction { font-style: italic; color: #666; text-align: center; margin-bottom: 25px;}
+#progress-indicator { text-align: center; margin-bottom: 20px; font-weight: bold; color: #00796b; font-size: 1.1em;}
+
+.question-group {
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fdfdfd;
+}
+.question-group p { font-weight: 500; margin-bottom: 15px; color: #333; }
+.question-group label { display: block; margin-bottom: 10px; cursor: pointer; padding: 10px; border-radius: 4px; transition: background-color 0.2s ease;}
+.question-group label:hover { background-color: #e8f4f3; }
+input[type="radio"] { margin-right: 10px; vertical-align: middle; }
+
+.nav-buttons {
+  margin-top: 20px;
+  display: flex; /* Use flexbox for button layout */
+  justify-content: space-between; /* Space out Prev/Next */
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+/* Ensure only necessary buttons appear */
+.question-group[data-question="1"] .btn-prev-question { display: none; }
+/* Adjust submit button visibility via JS */
+.btn-submit-assessment { background-color: #00796b; } /* Highlight submit */
+.btn-prev-question { background-color: #aaa; }
+.btn-prev-question:hover { background-color: #888; }
+
+/* Processing Step Spinner */
+#step-processing { text-align: center; padding: 50px 0;}
+.loader {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #0a9396; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Results Step */
+#step-results h2 { color: #005f73; }
+.results-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Responsive columns */
+  gap: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.result-item {
+  background-color: #e8f4f3;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #b2dfdb;
+}
+.result-item h3 { margin-top: 0; }
+.result-item p { margin-bottom: 5px; font-size: 1.1em;}
+.result-item span { font-weight: bold; color: #004d40; } /* Highlight score/level */
+
+.disclaimer {
+  background-color: #fff3e0; /* Light orange */
+  border: 1px solid #ffe0b2;
+  color: #e65100; /* Dark orange */
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+.disclaimer strong { color: #bf360c; } /* Darker orange for emphasis */
+
+
+/* Resources Step */
+#step-resources ul { list-style-type: disc; }
+#step-resources li { margin-bottom: 10px; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .assessment-container { padding: 20px 15px; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.3em; }
+  button { width: calc(50% - 10px); margin-bottom: 10px; } /* Adjust button width */
+  .nav-buttons button { width: calc(50% - 10px); } /* Two buttons side-by-side */
+   .nav-buttons button.btn-next-question:only-child,
+   .nav-buttons button.btn-submit-assessment:only-child {
+      width: 100%; /* Full width if only one button */
+      margin-left: auto; margin-right: auto; display: block;
+   }
+  .nav-buttons button.btn-prev-question { margin-right: 5px; } /* Space between prev/next */
+  .nav-buttons button.btn-next-question,
+  .nav-buttons button.btn-submit-assessment { margin-left: 5px; }
+
+  .results-summary { grid-template-columns: 1fr; } /* Stack results on small screens */
+}
+
+/* Ensure button margin only between buttons */
+button + button {
+   margin-left: 10px;
+}
+.nav-buttons button {
+   margin-left: 0; /* Reset margin */
+   margin-right: 0;
+}
+.nav-buttons button:not(:first-child) {
+   margin-left: 10px; /* Add margin only if not the first button */
+}
+.nav-buttons button.btn-prev-question {
+   margin-left: 0;
+}
+.nav-buttons button.btn-next-question, .nav-buttons button.btn-submit-assessment {
+   margin-left: auto; /* Push next/submit to the right if prev exists */
+}

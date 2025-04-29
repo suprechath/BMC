@@ -1,0 +1,170 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f7f9fc;
+}
+
+.top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #4FA3F7, #A4D4A9);
+  color: white;
+  padding: 10px 20px;
+}
+
+/* Slidebar Icon */
+.slidebar-icon {
+  cursor: pointer;
+  font-size: 30px; /* เพิ่มขนาด icon ☰ */
+  color: white;
+}
+
+.profile {
+  position: relative;
+  cursor: pointer;
+}
+
+.profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #ffffffcc;
+  background-color: #ffffff22;
+  padding: 4px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  cursor: pointer;
+}
+
+.profile img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Slidebar */
+.slidebar {
+  position: fixed;
+  top: 0;
+  left: -250px; /* Initially off-screen */
+  width: 250px;
+  height: 100%;
+  background-color: #333;
+  color: white;
+  transition: left 0.3s ease;
+  z-index: 1000;
+  padding-top: 20px;
+}
+
+.slidebar-content {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+}
+
+.slidebar-content a {
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  background-color: #444;
+  transition: background-color 0.3s ease;
+}
+
+.slidebar-content a:hover {
+  background-color: #555;
+}
+
+/* Close Button for Slidebar */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.close-btn:hover {
+  background-color: #ff1a1a;
+}
+
+/* Dropdown */
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 45px;
+  background-color: white;
+  color: black;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  min-width: 150px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown a {
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  border-bottom: 1px solid #eee;
+}
+
+.dropdown a:last-child {
+  border-bottom: none;
+}
+
+.dropdown a:hover {
+  background-color: #f0f0f0;
+}
+
+/* Content */
+.content {
+  padding: 20px;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.add-btn {
+  background-color: #00aaff;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #007acc;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.hidden {
+  display: none;
+}
