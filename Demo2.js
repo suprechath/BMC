@@ -1,3 +1,5 @@
+//Demo2.js
+
 document.addEventListener('DOMContentLoaded', function() {
   // --- DOM Elements ---
   const steps = document.querySelectorAll('.step');
@@ -20,6 +22,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const totalQuestions = questionGroups.length; // Should be 21
   let currentQuestionIndex = 0;
+
+    const linkPsychologist = document.getElementById('link-psychologist');
+    if (linkPsychologist) {
+      linkPsychologist.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = 'Demo3.html'; // เปลี่ยนหน้าไปยัง Demo3.html
+      });
+    }
+    
 
   // --- Helper Functions ---
   function showStep(stepIdToShow) {
