@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ระบบนัดพบนักจิตวิทยา</title>
+  <link rel="stylesheet" href="demo3.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="assessment-container">
+    <button onclick="goBackToAssessment()" class="back-button">← กลับไปยังแบบประเมิน DASS-21</button>
+
+    <h1>นัดพบนักจิตวิทยา</h1>
+    <div class="psychologist-list" id="psychologistList"></div>
+  </div>
+
+  <!-- Overlay & Calendar -->
+  <div class="overlay" id="overlay"></div>
+
+  <div class="calendar-popup" id="calendarPopup">
+    <!-- <button class="close-btn" onclick="closePopup()">ปิด</button> -->
+  
+    <div class="calendar-header">
+      <h3 id="calendarTitle">ปฏิทินของ ดร. สุภาวดี จิตวิทยา - พฤษภาคม 2568</h3>
+    </div>
+  
+    <div class="calendar" id="calendarGrid"></div>
+
+    <button class="close-btn" onclick="closePopup()">ปิด</button>
+  </div>
+  
+
+  <!-- ยืนยันการจอง -->
+  <div class="confirm-popup" id="confirmPopup">
+    <p id="confirmText">คุณต้องการจองใช่หรือไม่?</p>
+    <button onclick="confirmBooking()">ยืนยัน</button>
+    <button onclick="cancelBooking()">ยกเลิก</button>
+  </div>
+
+  <script src="demo3.js"></script>
+</body>
+</html>
