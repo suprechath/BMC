@@ -207,3 +207,33 @@ button + button {
 .psychologist-btn:hover {
   background-color: #218838;
 }
+
+/* --- Popup Chatbot --- */
+.popup {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  z-index: 1001;
+  text-align: center;
+}
+.popup-content p {
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+.popup-actions button {
+  margin: 0 10px;
+  padding: 8px 16px;
+}
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 1000;
+}
+.hidden {
+  display: none;
+}

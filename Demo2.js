@@ -214,3 +214,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 });
+
+// --- Chatbot popup logic ---
+const chatbotLink = document.getElementById("chatbot-link");
+const popup = document.getElementById("chatbot-popup");
+const overlay = document.getElementById("popup-overlay");
+const btnConfirm = document.getElementById("confirm-chatbot");
+const btnCancel = document.getElementById("cancel-chatbot");
+
+if (chatbotLink && popup && overlay) {
+  chatbotLink.addEventListener("click", function (e) {
+    e.preventDefault(); // หยุดการลิงก์ออกไปก่อน
+    popup.classList.remove("hidden");
+    overlay.classList.remove("hidden");
+  });
+
+  btnConfirm.addEventListener("click", function () {
+    window.open(chatbotLink.href, "_blank");
+    popup.classList.add("hidden");
+    overlay.classList.add("hidden");
+  });
+
+  btnCancel.addEventListener("click", function () {
+    popup.classList.add("hidden");
+    overlay.classList.add("hidden");
+  });
+}
