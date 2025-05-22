@@ -44,7 +44,7 @@ const thaiMonths = [
 ];
 
 function goBackToAssessment() {
-  window.location.href = "Demo2.html";
+  window.location.href = "index.html";
 }
 
 function renderPsychologists() {
