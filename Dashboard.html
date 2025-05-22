@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindful Hero / Reports - Executive Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --primary-hover-color: #357ABD;
+            --secondary-color: #50E3C2; /* Teal accent */
+            --text-color: #4A4A4A;
+            --light-text-color: #7B7B7B;
+            --bg-color: #F7F9FA;
+            --card-bg-color: #FFFFFF;
+            --border-color: #E0E6ED;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --neutral-color: #6c757d; /* For neutral sentiment */
+            --font-family: 'Sarabun', 'Arial', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-family); background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; font-weight: 400; }
+        .dashboard-container { display: flex; flex-direction: column; min-height: 100vh; }
+
+        /* Header & Navigation */
+        .dashboard-header { background-color: var(--card-bg-color); padding: 1rem 2rem; box-shadow: 0 2px 5px var(--shadow-color); display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; position: sticky; top: 0; z-index: 1000; }
+        .dashboard-header .logo-area h1 { color: var(--primary-color); font-size: 1.8rem; font-weight: 700; margin: 0; } /* Adjusted font size for longer title */
+        .dashboard-header .user-area { margin-left: auto; font-size: 0.95rem; color: var(--light-text-color); }
+        .dashboard-header .user-area strong { color: var(--text-color); font-weight: 600; }
+        
+        /* Main Navigation - Adjusted as it might be empty or have different content */
+        .main-navigation {
+            width: 100%;
+            /* border-top: 1px solid var(--border-color); */ /* Optional if nav is empty */
+            margin-top: 0.75rem;
+            padding-top: 0.25rem; /* Reduced padding if empty */
+            min-height: 20px; /* Ensure it takes some space even if empty, or set to 0 if fully removed */
+        }
+        .main-navigation ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 1rem 2rem; }
+        .main-navigation ul li a { text-decoration: none; color: var(--text-color); font-weight: 500; padding: 0.5rem 0.25rem; transition: color 0.2s ease, border-color 0.2s ease; border-bottom: 2px solid transparent; font-size: 1rem; white-space: nowrap; }
+        .main-navigation ul li a:hover, .main-navigation ul li a.active { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); }
+        
+        .global-filters { width: 100%; display: flex; flex-wrap: wrap; gap: 1.25rem; padding: 1rem 0; background-color: #F0F4F8; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-top: 0.75rem; }
+        .filter-group { display: flex; align-items: center; gap: 0.6rem; }
+        .filter-group label { font-size: 0.9rem; color: var(--light-text-color); font-weight: 500; }
+        .filter-group select, #apply-filters { padding: 0.6rem 0.9rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.9rem; background-color: var(--card-bg-color); transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        .filter-group select:focus, #apply-filters:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3); }
+        #apply-filters { background-color: var(--primary-color); color: white; cursor: pointer; border: none; font-weight: 500; transition: background-color 0.2s ease; }
+        #apply-filters:hover { background-color: var(--primary-hover-color); }
+
+        /* Main Content Area */
+        .dashboard-main { flex-grow: 1; padding: 2rem; }
+        .dashboard-section { background-color: var(--card-bg-color); padding: 2rem; margin-bottom: 2rem; border-radius: 12px; box-shadow: 0 4px 12px var(--shadow-color); }
+        .dashboard-section h2 { color: var(--primary-color); margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); font-size: 1.6rem; font-weight: 600; display: flex; align-items: center; }
+        .section-icon { margin-right: 0.85rem; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: white; }
+        #overview .section-icon { background-color: var(--primary-color); }
+        #trends .section-icon { background-color: var(--success-color); }
+        #assessment-breakdown .section-icon { background-color: var(--warning-color); }
+        #ai-insights .section-icon { background-color: #17a2b8; } /* Teal */
+        #appointments .section-icon { background-color: #6f42c1; } /* Purple */
+        #recommendations .section-icon { background-color: #fd7e14; } /* Orange */
+
+        .overview-grid, .trend-grid, .assessment-grid, .ai-insights-grid, .appointments-grid { display: grid; gap: 2rem; }
+        .overview-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        .trend-grid { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
+        .assessment-grid { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
+        .ai-insights-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .appointments-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+        .metric-card { background-color: #F9FBFC; padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); transition: box-shadow 0.2s ease; display: flex; flex-direction: column; }
+        .metric-card:hover { box-shadow: 0 2px 8px var(--shadow-color); }
+        .metric-card h3 { font-size: 1.1rem; color: var(--text-color); margin-bottom: 0.75rem; font-weight: 600; }
+        .metric-card p { font-size: 0.95rem; color: var(--light-text-color); margin-bottom: 0.25rem; }
+        .metric-card .score { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .metric-card .score.green { color: var(--success-color); }
+        .metric-card .score.yellow { color: var(--warning-color); }
+        .metric-card .score.red { color: var(--danger-color); }
+        .metric-card .change { font-size: 0.9rem; font-weight: 500; }
+        .metric-card .change .arrow { font-size: 1.2em; margin-right: 0.2em; }
+        .metric-card .change.positive { color: var(--success-color); }
+        .metric-card .change.negative { color: var(--danger-color); }
+        .metric-card .change.neutral { color: var(--light-text-color); }
+
+        .chart-card { background-color: var(--card-bg-color); padding: 1.5rem; border-radius: 8px; display: flex; flex-direction: column; }
+        .chart-card h3 { font-size: 1.1rem; color: var(--text-color); margin-bottom: 1rem; text-align: center; font-weight: 600; }
+        .chart-container { position: relative; height: 300px; width: 100%; flex-grow: 1; }
+        .chart-container.mini { height: 180px; }
+        .chart-container.medium { height: 250px; }
+
+        .table-card { background-color: var(--card-bg-color); padding: 1.5rem; border-radius: 8px; overflow-x: auto; }
+        .table-card h3 { font-size: 1.1rem; color: var(--text-color); margin-bottom: 1rem; font-weight: 600; }
+        .table-card table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .table-card th, .table-card td { text-align: left; padding: 0.8rem 0.5rem; border-bottom: 1px solid var(--border-color); }
+        .table-card th { background-color: #F8FAFC; font-weight: 600; color: var(--text-color); }
+        .table-card tbody tr:hover { background-color: #F1F5F9; }
+        .table-card .privacy-note { font-size: 0.8rem; color: #A0AEC0; margin-top: 1rem; text-align: right; }
+        .table-card td.positive { color: var(--success-color); font-weight: 500; }
+        .table-card td.negative { color: var(--danger-color); font-weight: 500; }
+        .table-card td.neutral { color: var(--light-text-color); }
+
+        .recommendations-content h3 { font-size: 1.2rem; color: var(--primary-color); margin-top: 1.25rem; margin-bottom: 0.75rem; font-weight: 600; }
+        .recommendations-content ul { list-style-type: "✓  "; padding-left: 1rem; margin-bottom: 1.25rem; }
+        .recommendations-content ul li { margin-bottom: 0.5rem; font-size: 0.95rem; color: var(--text-color); padding-left: 0.5rem; }
+        .recommendations-content p { font-size: 0.95rem; margin-bottom: 1rem; color: var(--text-color); }
+
+        .dashboard-footer { background-color: #333B44; color: #BDC3C7; text-align: center; padding: 1.5rem; font-size: 0.9rem; margin-top: auto; }
+        .dashboard-footer p { margin: 0; }
+
+        @media (max-width: 1200px) {
+             .ai-insights-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        }
+        @media (max-width: 992px) {
+            .dashboard-header { padding: 1rem; }
+            .global-filters { flex-direction: column; align-items: stretch; }
+            .chart-container { height: 250px; }
+            .chart-container.mini { height: 150px; }
+            .chart-container.medium { height: 220px; }
+            .trend-grid, .assessment-grid, .ai-insights-grid, .appointments-grid { grid-template-columns: 1fr; }
+        }
+         @media (max-width: 768px) {
+            .main-navigation { margin-top: 0.5rem; padding-top: 0; } /* Adjust if nav is empty */
+            .main-navigation ul { flex-direction: column; gap: 0.5rem; }
+            .main-navigation ul li a { padding: 0.75rem 0.5rem; display: block; }
+            /* .main-navigation ul li a.active { background-color: rgba(74, 144, 226, 0.1); border-radius: 6px; } */ /* Active state might not be needed */
+            .chart-container { height: 220px; }
+            .chart-container.mini { height: 120px; }
+            .chart-container.medium { height: 200px; }
+        }
+         @media (max-width: 480px) {
+            .dashboard-header { padding: 1rem 0.75rem; }
+            .dashboard-header .logo-area h1 { font-size: 1.5rem; } /* Adjusted for potentially longer title */
+            .dashboard-main { padding: 1rem; }
+            .dashboard-section { padding: 1rem; }
+            .global-filters { gap: 0.75rem; }
+            .filter-group select, #apply-filters { padding: 0.5rem 0.7rem; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="logo-area">
+                <h1>Mindful Hero / Reports</h1> </div>
+            <div class="user-area">
+                <span>สวัสดี, <strong>[ชื่อผู้บริหาร]</strong> / [ตำแหน่ง]</span>
+            </div>
+            <nav class="main-navigation">
+                <ul>
+                    </ul>
+            </nav>
+            <div class="global-filters">
+                <div class="filter-group">
+                    <label for="filter-department">หน่วยงาน/แผนก:</label>
+                    <select id="filter-department">
+                        <option value="all">ทั้งหมด</option>
+                        <option value="hr">ฝ่ายบุคคล (HR)</option>
+                        <option value="it">ฝ่ายไอที (IT)</option>
+                        <option value="mkt">ฝ่ายการตลาด</option>
+                        <option value="ops">ฝ่ายปฏิบัติการ</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-period">ช่วงเวลา:</label>
+                    <select id="filter-period">
+                        <option value="monthly">รายเดือน</option>
+                        <option value="quarterly">รายไตรมาส</option>
+                        <option value="yearly">รายปี</option>
+                        <option value="custom">กำหนดเอง</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-personnel-type">ประเภทบุคลากร:</label>
+                    <select id="filter-personnel-type">
+                        <option value="all">ทั้งหมด</option>
+                        <option value="frontline">ผู้พิทักษ์แนวหน้า</option>
+                        <option value="support">เจ้าหน้าที่สนับสนุน</option>
+                    </select>
+                </div>
+                <button id="apply-filters">ใช้ตัวกรอง</button>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <section class="dashboard-section" id="overview">
+                <h2><span class="section-icon">📊</span> สรุปภาพรวมสถานะสุขภาพจิตองค์กร</h2>
+                <div class="overview-grid">
+                    <div class="metric-card">
+                        <h3>คะแนนสุขภาพจิตเฉลี่ย</h3>
+                        <p class="score green" id="avg-score">78/100</p>
+                        <p class="change positive" id="score-change"><span class="arrow">↑</span> 2% จากเดือนที่แล้ว</p>
+                    </div>
+                    <div class="metric-card chart-card">
+                        <h3>การกระจายระดับความเสี่ยง</h3>
+                        <div class="chart-container">
+                            <canvas id="riskDistributionChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>บุคลากรที่เข้าร่วม</h3>
+                        <p>ผู้ลงทะเบียน: <strong id="total-registered">450</strong></p>
+                        <p>ทำแบบประเมินล่าสุด: <strong id="total-assessed">380</strong></p>
+                        <p>Engagement Rate: <strong id="engagement-rate">84.4%</strong></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="dashboard-section" id="trends">
+                <h2><span class="section-icon">📈</span> แนวโน้มสุขภาพจิต</h2>
+                <div class="trend-grid">
+                    <div class="chart-card">
+                        <h3>กราฟแนวโน้มคะแนนสุขภาพจิตเฉลี่ย</h3>
+                        <div class="chart-container">
+                            <canvas id="scoreTrendChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>กราฟแนวโน้มระดับความเสี่ยง (รายบุคคล)</h3>
+                         <div class="chart-container">
+                            <canvas id="riskLevelTrendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="dashboard-section" id="assessment-breakdown">
+                <h2><span class="section-icon">🎯</span> ข้อมูลเชิงลึกจากแบบประเมิน</h2>
+                <div class="assessment-grid">
+                    <div class="chart-card">
+                        <h3>จุดแข็งและจุดอ่อนของสุขภาพจิตองค์กร</h3>
+                        <div class="chart-container">
+                            <canvas id="strengthsWeaknessesChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="table-card">
+                        <h3>ระบุกลุ่ม/หน่วยงานที่มีแนวโน้มความเสี่ยงสูง</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>รหัสหน่วยงาน</th>
+                                    <th>คะแนนเฉลี่ย</th>
+                                    <th>% บุคลากรกลุ่มเสี่ยงสูง</th>
+                                    <th>แนวโน้มล่าสุด</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>DEPT-IT01</td><td>65/100</td><td>25%</td><td class="negative"><span class="arrow">↓</span> 5%</td></tr>
+                                <tr><td>DEPT-OPS03</td><td>68/100</td><td>22%</td><td class="neutral"><span class="arrow">→</span> 0%</td></tr>
+                                <tr><td>DEPT-MKT02</td><td>70/100</td><td>18%</td><td class="positive"><span class="arrow">↑</span> 3%</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="privacy-note">ข้อมูลรวมและไม่ระบุตัวตนบุคคล</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="dashboard-section" id="ai-insights">
+                <h2><span class="section-icon">🤖</span> ข้อมูลเชิงลึกจากการโต้ตอบกับ AI Agent</h2>
+                <div class="ai-insights-grid">
+                    <div class="metric-card">
+                        <h3>สถิติการใช้งาน AI Agent</h3>
+                        <p>ผู้ใช้งาน (Unique): <strong id="ai-unique-users">250</strong></p>
+                        <p>จำนวนครั้งสนทนา: <strong id="ai-sessions">1,200</strong></p>
+                        <p>ระยะเวลาสนทนารวม: <strong id="ai-duration">350 ชั่วโมง</strong></p>
+                    </div>
+                     <div class="chart-card">
+                        <h3>กราฟแนวโน้มการใช้งาน AI Agent</h3>
+                        <div class="chart-container mini">
+                            <canvas id="aiUsageTrendChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>หัวข้อสนทนาที่พบบ่อย (Aggregated)</h3>
+                        <div class="chart-container medium">
+                            <canvas id="frequentTopicsChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>แนวโน้มอารมณ์รวมจากการสนทนา</h3>
+                        <div class="chart-container medium">
+                            <canvas id="sentimentTrendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="dashboard-section" id="appointments">
+                <h2><span class="section-icon">🗓️</span> ข้อมูลเกี่ยวกับการนัดพบแพทย์</h2>
+                <div class="appointments-grid">
+                    <div class="metric-card">
+                        <h3>ภาพรวมการนัดหมาย</h3>
+                        <p>จำนวนนัดหมายทั้งหมด: <strong id="total-appointments">85</strong></p>
+                        <p>อัตราการเข้าร่วม: <strong id="appointment-attendance-rate">92%</strong></p>
+                        <p>ประเภทที่พบบ่อย: <span id="common-appointment-types">จิตแพทย์ (40%), นักจิตวิทยา (35%), นักให้คำปรึกษา (25%)</span></p>
+                    </div>
+                    <div class="chart-card">
+                        <h3>กราฟแนวโน้มการนัดหมาย</h3>
+                        <div class="chart-container mini">
+                            <canvas id="appointmentTrendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="dashboard-section" id="recommendations">
+                <h2><span class="section-icon">💡</span> ข้อเสนอแนะเชิงกลยุทธ์</h2>
+                <div class="recommendations-content">
+                    <h3>สรุปประเด็นสำคัญ (Key Findings):</h3>
+                    <ul>
+                        <li>ผลจากไตรมาสล่าสุดแสดงให้เห็นว่าบุคลากรในหน่วยงาน <strong>DEPT-IT01</strong> มีความเครียดสูงจากภาระงาน และคะแนนสุขภาพจิตเฉลี่ยลดลง</li>
+                        <li>การใช้งาน AI Agent เพิ่มขึ้นอย่างต่อเนื่อง โดยหัวข้อ "ภาระงาน" และ "ความเครียด" ถูกพูดถึงบ่อยครั้ง</li>
+                        <li>อัตราการเข้าร่วมนัดหมายแพทย์อยู่ในระดับสูง แสดงถึงความต้องการการสนับสนุนเชิงรุก</li>
+                    </ul>
+                    <h3>ข้อเสนอแนะเพื่อการดำเนินการ (Actionable Recommendations):</h3>
+                    <ul>
+                        <li>พิจารณาจัด Workshop การจัดการความเครียดและ Work-life Balance ให้กับหน่วยงาน DEPT-IT01 และหน่วยงานอื่นๆ ที่มีแนวโน้มคล้ายกัน</li>
+                        <li>เพิ่มช่องทางการสื่อสารสองทางแบบไม่ระบุตัวตนเพื่อให้บุคลากรสามารถแจ้งปัญหาหรือข้อเสนอแนะได้ง่ายขึ้น</li>
+                        <li>ส่งเสริมการใช้ AI Agent อย่างต่อเนื่อง โดยอาจมีการประชาสัมพันธ์ถึงฟีเจอร์ที่เป็นประโยชน์เพิ่มเติม และจัดอบรมการใช้งานเบื้องต้น</li>
+                        <li>สำรวจความต้องการเฉพาะของบุคลากรในกลุ่ม "ผู้พิทักษ์แนวหน้า" เพื่อออกแบบโปรแกรมสนับสนุนที่ตรงจุด และวัดผลการตอบรับ</li>
+                    </ul>
+                    <h3>การประเมินผลโครงการ Mindful Hero:</h3>
+                    <p>เมื่อเทียบกับข้อมูลก่อนเริ่มโครงการ (ถ้ามี), พบว่าคะแนนสุขภาพจิตโดยรวมขององค์กรดีขึ้น <strong>5%</strong> และ Engagement Rate กับเครื่องมือสุขภาพจิตเพิ่มขึ้น <strong>15%</strong>. ควรมีการติดตามผลอย่างต่อเนื่องทุกไตรมาส และพิจารณาเพิ่มตัวชี้วัดเชิงคุณภาพ</p>
+                </div>
+            </section>
+        </main>
+        <footer class="dashboard-footer">
+            <p>&copy; 2025 Mindful Hero / Reports. All rights reserved.</p>
+            <p>ข้อมูลทั้งหมดในหน้านี้เป็นข้อมูลรวมและไม่ระบุตัวตนบุคคล</p>
+        </footer>
+    </div>
+
+    <script>
+        // Store chart instances
+        let riskDistributionChartInstance, scoreTrendChartInstance, riskLevelTrendChartInstance, strengthsWeaknessesChartInstance,
+            aiUsageTrendChartInstance, appointmentTrendChartInstance, frequentTopicsChartInstance, sentimentTrendChartInstance;
+
+        const sarabunFont = "'Sarabun', sans-serif";
+
+        function getRandomData(count, min, max, decimals = 0) { return Array.from({ length: count }, () => parseFloat((Math.random() * (max - min) + min).toFixed(decimals))); }
+        function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+        Chart.defaults.font.family = sarabunFont;
+        Chart.defaults.font.size = 13;
+        Chart.defaults.color = '#666';
+
+        function createRiskDistributionChart() {
+            const riskCtx = document.getElementById('riskDistributionChart')?.getContext('2d');
+            if (!riskCtx) return;
+            riskDistributionChartInstance = new Chart(riskCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['เสี่ยงต่ำ', 'ปานกลาง', 'สูง'],
+                    datasets: [{
+                        label: 'การกระจายระดับความเสี่ยง', data: [getRandomInt(50,70), getRandomInt(20,30), getRandomInt(5,15)],
+                        backgroundColor: [getComputedStyle(document.documentElement).getPropertyValue('--success-color').trim(), getComputedStyle(document.documentElement).getPropertyValue('--warning-color').trim(), getComputedStyle(document.documentElement).getPropertyValue('--danger-color').trim()],
+                        borderColor: [getComputedStyle(document.documentElement).getPropertyValue('--card-bg-color').trim()], borderWidth: 2, hoverOffset: 4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top'} } }
+            });
+        }
+
+        function createScoreTrendChart() {
+            const scoreTrendCtx = document.getElementById('scoreTrendChart')?.getContext('2d');
+            if (!scoreTrendCtx) return;
+            scoreTrendChartInstance = new Chart(scoreTrendCtx, {
+                type: 'line', data: { labels: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.'],
+                    datasets: [{
+                        label: 'คะแนนสุขภาพจิตเฉลี่ย', data: getRandomData(6, 60, 85),
+                        borderColor: getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim(),
+                        backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim().replace(')',', 0.1)'),
+                        tension: 0.3, fill: true, pointBackgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim(), pointBorderColor: '#fff', pointHoverRadius: 7, pointHoverBorderWidth: 2
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { suggestedMin: 50, suggestedMax: 100 }, x: {} }, plugins: { legend: { display: true } } }
+            });
+        }
+        
+        function createRiskLevelTrendChart() {
+            const riskLevelTrendCtx = document.getElementById('riskLevelTrendChart')?.getContext('2d');
+            if (!riskLevelTrendCtx) return;
+             riskLevelTrendChartInstance = new Chart(riskLevelTrendCtx, {
+                type: 'line', data: { labels: ['ไตรมาส 1', 'ไตรมาส 2', 'ไตรมาส 3', 'ไตรมาส 4'],
+                    datasets: [
+                        { label: 'เสี่ยงต่ำ', data: getRandomData(4, 200, 300), borderColor: getComputedStyle(document.documentElement).getPropertyValue('--success-color').trim(), backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--success-color').trim().replace(')',', 0.1)'), tension: 0.3, fill: 'origin' },
+                        { label: 'เสี่ยงปานกลาง', data: getRandomData(4, 70, 120), borderColor: getComputedStyle(document.documentElement).getPropertyValue('--warning-color').trim(), backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--warning-color').trim().replace(')',', 0.1)'), tension: 0.3, fill: 'origin' },
+                        { label: 'เสี่ยงสูง', data: getRandomData(4, 20, 60), borderColor: getComputedStyle(document.documentElement).getPropertyValue('--danger-color').trim(), backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--danger-color').trim().replace(')',', 0.1)'), tension: 0.3, fill: 'origin' }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, scales: { y: { stacked: false }, x: {} }, plugins: { legend: { position: 'top' } } }
+            });
+        }
+
+        function createStrengthsWeaknessesChart() {
+            const strengthsCtx = document.getElementById('strengthsWeaknessesChart')?.getContext('2d');
+            if (!strengthsCtx) return;
+            strengthsWeaknessesChartInstance = new Chart(strengthsCtx, {
+                type: 'bar', data: { labels: ['ความเครียด', 'การเผชิญปัญหา', 'ความยืดหยุ่น', 'ภาวะหมดไฟ', 'การมีส่วนร่วม'],
+                    datasets: [{
+                        label: 'คะแนนเฉลี่ย (เต็ม 5)', data: getRandomData(5, 2.5, 4.8, 1),
+                        backgroundColor: [ 'rgba(220, 53, 69, 0.7)', 'rgba(40, 167, 69, 0.7)', 'rgba(74, 144, 226, 0.7)', 'rgba(255, 193, 7, 0.7)', 'rgba(111, 66, 193, 0.7)' ],
+                        borderColor: [ 'rgba(220, 53, 69, 1)', 'rgba(40, 167, 69, 1)', 'rgba(74, 144, 226, 1)', 'rgba(255, 193, 7, 1)', 'rgba(111, 66, 193, 1)' ],
+                        borderWidth: 1
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', scales: { x: { beginAtZero: true, max: 5 }, y: {} }, plugins: { legend: { display: false } } }
+            });
+        }
+
+        function createAiUsageTrendChart() {
+            const aiUsageCtx = document.getElementById('aiUsageTrendChart')?.getContext('2d');
+            if (!aiUsageCtx) return;
+            aiUsageTrendChartInstance = new Chart(aiUsageCtx, {
+                type: 'line', data: { labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6'],
+                    datasets: [{
+                        label: 'จำนวนการใช้งาน AI Agent', data: getRandomData(6, 50, 250),
+                        borderColor: 'rgba(23, 162, 184, 1)', backgroundColor: 'rgba(23, 162, 184, 0.1)',
+                        tension: 0.4, fill: true, pointRadius: 3, pointHoverRadius: 5
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, maxTicksLimit: 5 }, x: {} }, plugins: { legend: { display: false } } }
+            });
+        }
+        
+        function createAppointmentTrendChart() {
+            const appointmentCtx = document.getElementById('appointmentTrendChart')?.getContext('2d');
+            if (!appointmentCtx) return;
+            appointmentTrendChartInstance = new Chart(appointmentCtx, {
+                type: 'line', data: { labels: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.'],
+                    datasets: [{
+                        label: 'จำนวนการนัดหมาย', data: getRandomData(6, 5, 25),
+                        borderColor: 'rgba(111, 66, 193, 1)', backgroundColor: 'rgba(111, 66, 193, 0.1)',
+                        tension: 0.4, fill: true, pointRadius: 3, pointHoverRadius: 5
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks:{ stepSize: 5 } }, x: {} }, plugins: { legend: { display: false } } }
+            });
+        }
+
+        function createFrequentTopicsChart() {
+            const ctx = document.getElementById('frequentTopicsChart')?.getContext('2d');
+            if (!ctx) return;
+            const topics = ["ภาระงาน", "ความเครียด", "ความสัมพันธ์ฯ", "การปรับตัว", "ความก้าวหน้า", "Work-life"];
+            frequentTopicsChartInstance = new Chart(ctx, {
+                type: 'bar', data: { labels: topics,
+                    datasets: [{
+                        label: 'จำนวนครั้งที่ถูกกล่าวถึง', data: getRandomData(topics.length, 20, 150, 0),
+                        backgroundColor: 'rgba(23, 162, 184, 0.7)', borderColor: 'rgba(23, 162, 184, 1)', borderWidth: 1
+                    }]
+                },
+                options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { beginAtZero: true }, y: { } }, plugins: { legend: { display: false } } }
+            });
+        }
+
+        function createSentimentTrendChart() {
+            const ctx = document.getElementById('sentimentTrendChart')?.getContext('2d');
+            if (!ctx) return;
+            const timeLabels = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.'];
+            sentimentTrendChartInstance = new Chart(ctx, {
+                type: 'bar', data: { labels: timeLabels,
+                    datasets: [
+                        { label: 'บวก', data: getRandomData(timeLabels.length, 30, 60, 0), backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--success-color').trim().replace(')',', 0.7)') },
+                        { label: 'กลาง', data: getRandomData(timeLabels.length, 10, 25, 0), backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--neutral-color').trim().replace(')',', 0.7)') },
+                        { label: 'ลบ', data: getRandomData(timeLabels.length, 5, 20, 0), backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--danger-color').trim().replace(')',', 0.7)') }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false,
+                    scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true, ticks: { callback: function(value) { return value + '%' } } } },
+                    plugins: { legend: { position: 'top' }, tooltip: { callbacks: { label: function(context) { return `${context.dataset.label || ''}: ${context.parsed.y !== null ? context.parsed.y + '%' : ''}`; } } } }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Mindful Hero / Reports - Dashboard Initialized (Full Code Version)");
+
+            createRiskDistributionChart(); createScoreTrendChart(); createRiskLevelTrendChart();
+            createStrengthsWeaknessesChart(); createAiUsageTrendChart(); createAppointmentTrendChart();
+            createFrequentTopicsChart(); createSentimentTrendChart();
+
+            // Navigation Handlers - REMOVED as per request (or simplified if any links remain)
+            // const navLinks = document.querySelectorAll('.main-navigation a');
+            // function setActiveLink(activeLink) { /* ... */ }
+            // Add event listeners for any remaining nav links here if necessary.
+
+            const applyFiltersButton = document.getElementById('apply-filters');
+            if (applyFiltersButton) {
+                applyFiltersButton.addEventListener('click', function() {
+                    const department = document.getElementById('filter-department').value;
+                    const period = document.getElementById('filter-period').value;
+                    const personnelType = document.getElementById('filter-personnel-type').value;
+                    console.log("Applying Filters:", { department, period, personnelType });
+                    alert(`ใช้ตัวกรอง (Demo):\nหน่วยงาน: ${department}\nช่วงเวลา: ${period}\nประเภทบุคลากร: ${personnelType}\n\n(ข้อมูลและกราฟจะถูกจำลองการอัปเดต)`);
+
+                    document.getElementById('avg-score').textContent = `${getRandomInt(60,90)}/100`;
+                    const changeVal = getRandomInt(-5,5);
+                    const scoreChangeEl = document.getElementById('score-change');
+                    scoreChangeEl.innerHTML = `<span class="arrow">${changeVal > 0 ? '↑' : (changeVal < 0 ? '↓' : '→')}</span> ${Math.abs(changeVal)}% จากช่วงก่อนหน้า`;
+                    scoreChangeEl.className = `change ${changeVal > 0 ? 'positive' : changeVal < 0 ? 'negative' : 'neutral'}`;
+                    document.getElementById('engagement-rate').textContent = `${getRandomInt(70,95)}%`;
+                    document.getElementById('ai-unique-users').textContent = getRandomInt(200,300);
+                    document.getElementById('total-appointments').textContent = getRandomInt(70,100);
+                    
+                    if (riskDistributionChartInstance) { riskDistributionChartInstance.data.datasets[0].data = [getRandomInt(50,70), getRandomInt(20,30), getRandomInt(5,15)]; riskDistributionChartInstance.update(); }
+                    if (scoreTrendChartInstance) { scoreTrendChartInstance.data.datasets[0].data = getRandomData(6, 60, 85); scoreTrendChartInstance.update(); }
+                    if (riskLevelTrendChartInstance) { riskLevelTrendChartInstance.data.datasets.forEach((ds, i) => ds.data = getRandomData(4, [200, 70, 20][i], [300, 120, 60][i])); riskLevelTrendChartInstance.update(); }
+                    if (strengthsWeaknessesChartInstance) { strengthsWeaknessesChartInstance.data.datasets[0].data = getRandomData(5, 2.5, 4.8, 1); strengthsWeaknessesChartInstance.update(); }
+                    if (aiUsageTrendChartInstance) { aiUsageTrendChartInstance.data.datasets[0].data = getRandomData(6, 50, 250); aiUsageTrendChartInstance.update(); }
+                    if (appointmentTrendChartInstance) { appointmentTrendChartInstance.data.datasets[0].data = getRandomData(6, 5, 25); appointmentTrendChartInstance.update(); }
+                    if (frequentTopicsChartInstance) { frequentTopicsChartInstance.data.datasets[0].data = getRandomData(frequentTopicsChartInstance.data.labels.length, 20, 150, 0); frequentTopicsChartInstance.update(); }
+                    if (sentimentTrendChartInstance) { const timePoints = sentimentTrendChartInstance.data.labels.length; sentimentTrendChartInstance.data.datasets[0].data = getRandomData(timePoints, 30, 60, 0); sentimentTrendChartInstance.data.datasets[1].data = getRandomData(timePoints, 10, 25, 0); sentimentTrendChartInstance.data.datasets[2].data = getRandomData(timePoints, 5, 20, 0); sentimentTrendChartInstance.update(); }
+                });
+            }
+            ['filter-department', 'filter-period', 'filter-personnel-type'].forEach(id => {
+                document.getElementById(id)?.addEventListener('change', function(e) {
+                    console.log(`Filter changed: ${e.target.id} to ${e.target.value}`);
+                });
+            });
+            console.log("Chart.js is used for rendering charts. Ensure internet connection for Chart.js CDN.");
+        });
+    </script>
+</body>
+</html>
