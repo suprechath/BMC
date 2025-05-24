@@ -1,0 +1,385 @@
+<!-- Demo2.html -->
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo V.2: DASS-21 Assessment</title>
+    <link rel="stylesheet" href="assess.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="assessment-container">
+
+        <div id="step-welcome" class="step active">
+            <h1>แบบประเมิน DASS-21 (ฉบับภาษาไทย)</h1>
+            <p>ยินดีต้อนรับสู่แบบประเมินภาวะซึมเศร้า ความวิตกกังวล และความเครียด (DASS-21)</p>
+            <p>แบบประเมินนี้จะช่วยให้ท่านเข้าใจสภาวะอารมณ์ในช่วง 1 สัปดาห์ที่ผ่านมา ข้อมูลของท่านจะถูกเก็บเป็นความลับ</p>
+            <button id="btn-start">เริ่มต้นทำแบบประเมิน</button>
+            <!-- <button id="btn-show-resources">เริ่มต้นทำแบบประเมิน</button> -->
+        </div>
+
+        <div id="step-consent" class="step hidden">
+            <h2>คำแนะนำและคำยินยอม</h2>
+            <p>โปรดอ่านคำแนะนำและข้อตกลงด้านล่างนี้:</p>
+            <ul>
+                <li>แบบประเมินนี้มี 21 ข้อ ใช้เวลาประมาณ 5-10 นาที</li>
+                <li>คำถามจะเกี่ยวกับประสบการณ์ของท่านในช่วง <strong>1 สัปดาห์ที่ผ่านมา</strong></li>
+                <li>โปรดเลือกคำตอบที่ตรงกับความรู้สึกของท่านมากที่สุด</li>
+                <li>ข้อมูลของท่านจะถูกนำไปประมวลผลและเก็บรักษาเป็นความลับตามนโยบายคุ้มครองข้อมูลส่วนบุคคล</li>
+                <li>นี่เป็นการประเมินเบื้องต้น ไม่ใช่การวินิจฉัยทางการแพทย์</li>
+            </ul>
+            <div class="consent-box">
+                <label>
+                    <input type="checkbox" id="consent-checkbox">
+                    ข้าพเจ้ารับทราบและยินยอมเข้ารับการประเมินตามเงื่อนไขข้างต้น
+                </label>
+            </div>
+            <button id="btn-consent-next" disabled>เริ่มทำแบบประเมิน</button>
+        </div>
+
+        <div id="step-assessment" class="step hidden">
+            <h2>แบบประเมิน DASS-21</h2>
+            <p class="instruction">โปรดเลือกคำตอบที่ตรงกับประสบการณ์ของท่านที่สุด ในช่วง 1 สัปดาห์ที่ผ่านมา</p>
+            <div id="progress-indicator">คำถาม 1 / 21</div>
+
+            <form id="mental-health-form">
+                <div class="question-group active" data-question="1" data-scale="s">
+                    <p>1. ท่านรู้สึกว่าตนเองเกิดอารมณ์เสียได้ง่าย</p>
+                    <label><input type="radio" name="q1" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q1" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q1" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q1" value="3"> 3 - เป็นประจำ</label><br>
+                    <div class="nav-buttons">
+                       <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                <div class="question-group hidden" data-question="2" data-scale="a">
+                     <p>2. ท่านรู้สึกว่าปากแห้ง คอแห้ง</p>
+                    <label><input type="radio" name="q2" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q2" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q2" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q2" value="3"> 3 - เป็นประจำ</label><br>
+                     <div class="nav-buttons">
+                         <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                         <button type="button" class="btn-next-question">ถัดไป</button>
+                     </div>
+                </div>
+                <div class="question-group hidden" data-question="3" data-scale="d">
+                    <p>3. ท่านรู้สึกว่าไม่มีความรู้สึกด้านบวกใด ๆ เลย</p>
+                    <label><input type="radio" name="q3" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q3" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q3" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q3" value="3"> 3 - เป็นประจำ</label><br>
+                     <div class="nav-buttons">
+                         <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                         <button type="button" class="btn-next-question">ถัดไป</button>
+                     </div>
+                </div>
+                 <div class="question-group hidden" data-question="4" data-scale="a">
+                    <p>4. ท่านมีอาการหายใจลำบาก (เช่น หายใจเร็ว หอบ ทั้ง ๆ ที่ไม่ได้ออกกำลังกาย)</p>
+                    <label><input type="radio" name="q4" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q4" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q4" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q4" value="3"> 3 - เป็นประจำ</label><br>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                <div class="question-group hidden" data-question="5" data-scale="d">
+                    <p>5. ท่านรู้สึกว่าเป็นเรื่องยากที่จะกระตุ้นตนเองให้ทำสิ่งต่าง ๆ</p>
+                     <label><input type="radio" name="q5" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q5" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q5" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q5" value="3"> 3 - เป็นประจำ</label><br>
+                     <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                <div class="question-group hidden" data-question="6" data-scale="s">
+                    <p>6. ท่านมักจะแสดงปฏิกิริยามากเกิน ต่อสถานการณ์ต่าง ๆ</p>
+                    <label><input type="radio" name="q6" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q6" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q6" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q6" value="3"> 3 - เป็นประจำ</label><br>
+                     <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                <div class="question-group hidden" data-question="7" data-scale="a">
+                    <p>7. ท่านมีอาการสั่น (เช่น มือสั่น)</p>
+                    <label><input type="radio" name="q7" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q7" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q7" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q7" value="3"> 3 - เป็นประจำ</label><br>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                 <div class="question-group hidden" data-question="8" data-scale="s">
+                     <p>8. ท่านรู้สึกว่าตนเองใช้พลังงานทางประสาทไปมาก</p>
+                    <label><input type="radio" name="q8" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q8" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q8" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q8" value="3"> 3 - เป็นประจำ</label><br>
+                     <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                <div class="question-group hidden" data-question="9" data-scale="a">
+                    <p>9. ท่านกังวลเกี่ยวกับสถานการณ์ ที่อาจทำให้ท่านตื่นตระหนก หรือทำอะไรบ้า ๆ ออกไป</p>
+                    <label><input type="radio" name="q9" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q9" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q9" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q9" value="3"> 3 - เป็นประจำ</label><br>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                 <div class="question-group hidden" data-question="10" data-scale="d">
+                    <p>10. ท่านรู้สึกว่าไม่มีอะไร ที่จะตั้งตาคอยอีกแล้ว</p>
+                     <label><input type="radio" name="q10" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q10" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q10" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q10" value="3"> 3 - เป็นประจำ</label><br>
+                     <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                <div class="question-group hidden" data-question="11" data-scale="s">
+                    <p>11. ท่านพบว่าตนเอง อยู่ในภาวะกระวนกระวาย</p>
+                    <label><input type="radio" name="q11" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q11" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q11" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q11" value="3"> 3 - เป็นประจำ</label><br>
+                     <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                 <div class="question-group hidden" data-question="12" data-scale="s">
+                    <p>12. ท่านรู้สึกว่าเป็นเรื่องยาก ที่จะผ่อนคลาย</p>
+                    <label><input type="radio" name="q12" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q12" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q12" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q12" value="3"> 3 - เป็นประจำ</label><br>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                 <div class="question-group hidden" data-question="13" data-scale="d">
+                     <p>13. ท่านรู้สึกเศร้าและหดหู่</p>
+                    <label><input type="radio" name="q13" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q13" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q13" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q13" value="3"> 3 - เป็นประจำ</label><br>
+                     <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                 <div class="question-group hidden" data-question="14" data-scale="s">
+                    <p>14. ท่านไม่ยอมให้สิ่งใด มาขัดขวางการทำในสิ่งที่ต้องทำให้เสร็จ</p>
+                    <label><input type="radio" name="q14" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q14" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q14" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q14" value="3"> 3 - เป็นประจำ</label><br>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                <div class="question-group hidden" data-question="15" data-scale="a">
+                    <p>15. ท่านรู้สึกเหมือน กำลังจะตื่นตระหนก</p>
+                    <label><input type="radio" name="q15" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q15" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q15" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q15" value="3"> 3 - เป็นประจำ</label><br>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                 <div class="question-group hidden" data-question="16" data-scale="d">
+                    <p>16. ท่านไม่สามารถ มีความกระตือรือร้นในเรื่องใด ๆ</p>
+                    <label><input type="radio" name="q16" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q16" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q16" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q16" value="3"> 3 - เป็นประจำ</label><br>
+                     <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                <div class="question-group hidden" data-question="17" data-scale="d">
+                    <p>17. ท่านรู้สึกว่าตนเอง ไม่ค่อยมีคุณค่าในฐานะบุคคลคนหนึ่ง</p>
+                    <label><input type="radio" name="q17" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q17" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q17" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q17" value="3"> 3 - เป็นประจำ</label><br>
+                     <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                <div class="question-group hidden" data-question="18" data-scale="s">
+                    <p>18. ท่านรู้สึกว่าตนเอง ค่อนข้างอ่อนไหว</p>
+                     <label><input type="radio" name="q18" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q18" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q18" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q18" value="3"> 3 - เป็นประจำ</label><br>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                <div class="question-group hidden" data-question="19" data-scale="a">
+                    <p>19. ท่านทราบถึงการทำงาน ของหัวใจตนเอง ทั้ง ๆ ที่ไม่ได้ออกกำลังกาย (เช่น รู้สึกว่าหัวใจเต้นเร็วขึ้น หรือเต้นผิดจังหวะ)</p>
+                    <label><input type="radio" name="q19" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q19" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q19" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q19" value="3"> 3 - เป็นประจำ</label><br>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                 <div class="question-group hidden" data-question="20" data-scale="a">
+                    <p>20. ท่านรู้สึกกลัว โดยไม่มีเหตุผลอันสมควร</p>
+                    <label><input type="radio" name="q20" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q20" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q20" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q20" value="3"> 3 - เป็นประจำ</label><br>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-next-question">ถัดไป</button>
+                    </div>
+                </div>
+                 <div class="question-group hidden" data-question="21" data-scale="d">
+                    <p>21. ท่านรู้สึกว่า ชีวิตไม่มีความหมาย</p>
+                     <label><input type="radio" name="q21" value="0" required> 0 - ไม่เคยเลย</label><br>
+                    <label><input type="radio" name="q21" value="1"> 1 - บางครั้ง</label><br>
+                    <label><input type="radio" name="q21" value="2"> 2 - บ่อยครั้ง</label><br>
+                    <label><input type="radio" name="q21" value="3"> 3 - เป็นประจำ</label><br>
+                     <div class="nav-buttons">
+                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
+                        <button type="button" class="btn-submit-assessment">ส่งแบบประเมิน</button> </div>
+                </div>
+
+                </form>
+        </div>
+
+         <div id="step-processing" class="step hidden">
+            <h2>กำลังประมวลผล</h2>
+            <p>กรุณารอสักครู่...</p>
+            <div class="loader"></div>
+        </div>
+
+
+        <div id="step-results" class="step hidden">
+            <h2>ผลการประเมินเบื้องต้น (DASS-21)</h2>
+            <div class="results-summary">
+                <div class="result-item">
+                    <h3>ภาวะซึมเศร้า <br>(Depression)</h3>
+                    <p>คะแนน: <span id="score-d">-</span></p>
+                    <p>ระดับ: <span id="level-d">-</span></p>
+                </div>
+                <div class="result-item">
+                    <h3>ภาวะวิตกกังวล <br>(Anxiety)</h3>
+                    <p>คะแนน: <span id="score-a">-</span></p>
+                    <p>ระดับ: <span id="level-a">-</span></p>
+                </div>
+                <div class="result-item">
+                    <h3>ความเครียด <br>(Stress)</h3>
+                    <p>คะแนน: <span id="score-s">-</span></p>
+                    <p>ระดับ: <span id="level-s">-</span></p>
+                </div>
+            </div>
+            <div class="disclaimer">
+                <p><strong>ข้อควรระวัง:</strong> ผลลัพธ์นี้เป็นการประเมินเบื้องต้นโดยใช้ DASS-21 และเป็นการจำลอง ไม่สามารถใช้แทนการวินิจฉัยจากแพทย์หรือผู้เชี่ยวชาญ หากท่านมีความกังวลเกี่ยวกับสุขภาพจิต กรุณาปรึกษาผู้เชี่ยวชาญ</p>
+            </div>
+            <button id="btn-show-resources">ดูข้อมูลช่วยเหลือและขั้นตอนถัดไป</button>
+        </div>
+    
+
+        <!-- <div id="step-resources" class="step hidden">
+            <h2>ข้อมูลช่วยเหลือและขั้นตอนถัดไป</h2>
+            <p>ผลการประเมินเบื้องต้นนี้ เป็นข้อมูลส่วนหนึ่งในการดูแลสุขภาวะทางใจของท่าน</p>
+            <p>หากท่านมีคะแนนอยู่ในระดับที่น่ากังวล หรือรู้สึกไม่สบายใจ ต้องการคำปรึกษาเพิ่มเติม สามารถติดต่อ:</p>
+            <ul>
+                <li>สายด่วนสุขภาพจิต 1323 (กรมสุขภาพจิต)</li>
+
+                <li>
+                    <a href="Demo4.html" class="psychologist-button">
+                      🤖 เพื่อนชวนคุย: chatbot
+                    </a>
+                  </li>
+                  
+                <li>
+                    <a href="Demo3.html" class="psychologist-button">
+                        🧠 นัดพบนักจิตวิทยา
+                    </a>
+                </li>
+            </ul>
+            <p>การดูแลสุขภาพจิตเป็นสิ่งสำคัญ โปรดอย่าลังเลที่จะขอความช่วยเหลือเมื่อท่านต้องการ</p>
+            <button id="btn-finish">เสร็จสิ้น</button>
+        </div> -->
+        
+        <!-- เพิ่มในส่วน Resources -->
+        <div id="step-resources" class="step hidden">
+            <h2>ข้อมูลช่วยเหลือและขั้นตอนถัดไป</h2>
+            <p>ผลการประเมินเบื้องต้นนี้ เป็นข้อมูลส่วนหนึ่งในการดูแลสุขภาวะทางใจของท่าน</p>
+            <p>หากท่านมีคะแนนอยู่ในระดับที่น่ากังวล หรือรู้สึกไม่สบายใจ ต้องการคำปรึกษาเพิ่มเติม สามารถติดต่อ:</p>
+            <ul>
+                <li>สายด่วนสุขภาพจิต 1323 (กรมสุขภาพจิต)</li>
+                <li>
+                    <a href="Demo4.html" id="chatbot-link" class="psychologist-button">
+                        🤖 เพื่อนชวนคุย: chatbot
+                    </a>
+                </li>
+                <li>
+                    <a href="Demo3.html" class="psychologist-button">
+                        🧠 นัดพบนักจิตวิทยา
+                    </a>
+                </li>
+                <li>
+                    <a href="Demo5.html" class="psychologist-button" target="_blank">
+                        📚 คลังความรู้เฉพาะทาง
+                    </a>
+                </li>
+
+            </ul>
+            <p>การดูแลสุขภาพจิตเป็นสิ่งสำคัญ โปรดอย่าลังเลที่จะขอความช่วยเหลือเมื่อท่านต้องการ</p>
+            <button id="btn-finish">เสร็จสิ้น</button>
+        </div>
+
+        <!-- ✅ Popup กล่องแจ้งเตือน -->
+        <div id="chatbot-popup" class="popup hidden">
+        <div class="popup-content">
+            <p>ระบบจะเปิด chatbot ในหน้าต่างใหม่<br>คุณต้องการดำเนินการต่อหรือไม่?</p>
+            <div class="popup-actions">
+            <button id="confirm-chatbot" class="btn-confirm">ตกลง</button>
+            <button id="cancel-chatbot" class="btn-cancel">ยกเลิก</button>
+            </div>
+        </div>
+        </div>
+        <div id="popup-overlay" class="popup-overlay hidden"></div>
+
+
+    </div>
+
+    <script src="assess.js"></script>
+</body>
+</html>

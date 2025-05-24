@@ -1,385 +1,449 @@
-<!-- Demo2.html -->
-
 <!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo V.2: DASS-21 Assessment</title>
-    <link rel="stylesheet" href="index.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700&display=swap" rel="stylesheet">
-</head>
-<body>
-
-    <div class="assessment-container">
-
-        <div id="step-welcome" class="step active">
-            <h1>แบบประเมิน DASS-21 (ฉบับภาษาไทย)</h1>
-            <p>ยินดีต้อนรับสู่แบบประเมินภาวะซึมเศร้า ความวิตกกังวล และความเครียด (DASS-21)</p>
-            <p>แบบประเมินนี้จะช่วยให้ท่านเข้าใจสภาวะอารมณ์ในช่วง 1 สัปดาห์ที่ผ่านมา ข้อมูลของท่านจะถูกเก็บเป็นความลับ</p>
-            <button id="btn-start">เริ่มต้นทำแบบประเมิน</button>
-            <!-- <button id="btn-show-resources">เริ่มต้นทำแบบประเมิน</button> -->
-        </div>
-
-        <div id="step-consent" class="step hidden">
-            <h2>คำแนะนำและคำยินยอม</h2>
-            <p>โปรดอ่านคำแนะนำและข้อตกลงด้านล่างนี้:</p>
-            <ul>
-                <li>แบบประเมินนี้มี 21 ข้อ ใช้เวลาประมาณ 5-10 นาที</li>
-                <li>คำถามจะเกี่ยวกับประสบการณ์ของท่านในช่วง <strong>1 สัปดาห์ที่ผ่านมา</strong></li>
-                <li>โปรดเลือกคำตอบที่ตรงกับความรู้สึกของท่านมากที่สุด</li>
-                <li>ข้อมูลของท่านจะถูกนำไปประมวลผลและเก็บรักษาเป็นความลับตามนโยบายคุ้มครองข้อมูลส่วนบุคคล</li>
-                <li>นี่เป็นการประเมินเบื้องต้น ไม่ใช่การวินิจฉัยทางการแพทย์</li>
-            </ul>
-            <div class="consent-box">
-                <label>
-                    <input type="checkbox" id="consent-checkbox">
-                    ข้าพเจ้ารับทราบและยินยอมเข้ารับการประเมินตามเงื่อนไขข้างต้น
-                </label>
-            </div>
-            <button id="btn-consent-next" disabled>เริ่มทำแบบประเมิน</button>
-        </div>
-
-        <div id="step-assessment" class="step hidden">
-            <h2>แบบประเมิน DASS-21</h2>
-            <p class="instruction">โปรดเลือกคำตอบที่ตรงกับประสบการณ์ของท่านที่สุด ในช่วง 1 สัปดาห์ที่ผ่านมา</p>
-            <div id="progress-indicator">คำถาม 1 / 21</div>
-
-            <form id="mental-health-form">
-                <div class="question-group active" data-question="1" data-scale="s">
-                    <p>1. ท่านรู้สึกว่าตนเองเกิดอารมณ์เสียได้ง่าย</p>
-                    <label><input type="radio" name="q1" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q1" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q1" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q1" value="3"> 3 - เป็นประจำ</label><br>
-                    <div class="nav-buttons">
-                       <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                <div class="question-group hidden" data-question="2" data-scale="a">
-                     <p>2. ท่านรู้สึกว่าปากแห้ง คอแห้ง</p>
-                    <label><input type="radio" name="q2" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q2" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q2" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q2" value="3"> 3 - เป็นประจำ</label><br>
-                     <div class="nav-buttons">
-                         <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                         <button type="button" class="btn-next-question">ถัดไป</button>
-                     </div>
-                </div>
-                <div class="question-group hidden" data-question="3" data-scale="d">
-                    <p>3. ท่านรู้สึกว่าไม่มีความรู้สึกด้านบวกใด ๆ เลย</p>
-                    <label><input type="radio" name="q3" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q3" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q3" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q3" value="3"> 3 - เป็นประจำ</label><br>
-                     <div class="nav-buttons">
-                         <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                         <button type="button" class="btn-next-question">ถัดไป</button>
-                     </div>
-                </div>
-                 <div class="question-group hidden" data-question="4" data-scale="a">
-                    <p>4. ท่านมีอาการหายใจลำบาก (เช่น หายใจเร็ว หอบ ทั้ง ๆ ที่ไม่ได้ออกกำลังกาย)</p>
-                    <label><input type="radio" name="q4" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q4" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q4" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q4" value="3"> 3 - เป็นประจำ</label><br>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                <div class="question-group hidden" data-question="5" data-scale="d">
-                    <p>5. ท่านรู้สึกว่าเป็นเรื่องยากที่จะกระตุ้นตนเองให้ทำสิ่งต่าง ๆ</p>
-                     <label><input type="radio" name="q5" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q5" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q5" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q5" value="3"> 3 - เป็นประจำ</label><br>
-                     <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                <div class="question-group hidden" data-question="6" data-scale="s">
-                    <p>6. ท่านมักจะแสดงปฏิกิริยามากเกิน ต่อสถานการณ์ต่าง ๆ</p>
-                    <label><input type="radio" name="q6" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q6" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q6" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q6" value="3"> 3 - เป็นประจำ</label><br>
-                     <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                <div class="question-group hidden" data-question="7" data-scale="a">
-                    <p>7. ท่านมีอาการสั่น (เช่น มือสั่น)</p>
-                    <label><input type="radio" name="q7" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q7" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q7" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q7" value="3"> 3 - เป็นประจำ</label><br>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                 <div class="question-group hidden" data-question="8" data-scale="s">
-                     <p>8. ท่านรู้สึกว่าตนเองใช้พลังงานทางประสาทไปมาก</p>
-                    <label><input type="radio" name="q8" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q8" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q8" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q8" value="3"> 3 - เป็นประจำ</label><br>
-                     <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                <div class="question-group hidden" data-question="9" data-scale="a">
-                    <p>9. ท่านกังวลเกี่ยวกับสถานการณ์ ที่อาจทำให้ท่านตื่นตระหนก หรือทำอะไรบ้า ๆ ออกไป</p>
-                    <label><input type="radio" name="q9" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q9" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q9" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q9" value="3"> 3 - เป็นประจำ</label><br>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                 <div class="question-group hidden" data-question="10" data-scale="d">
-                    <p>10. ท่านรู้สึกว่าไม่มีอะไร ที่จะตั้งตาคอยอีกแล้ว</p>
-                     <label><input type="radio" name="q10" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q10" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q10" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q10" value="3"> 3 - เป็นประจำ</label><br>
-                     <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                <div class="question-group hidden" data-question="11" data-scale="s">
-                    <p>11. ท่านพบว่าตนเอง อยู่ในภาวะกระวนกระวาย</p>
-                    <label><input type="radio" name="q11" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q11" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q11" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q11" value="3"> 3 - เป็นประจำ</label><br>
-                     <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                 <div class="question-group hidden" data-question="12" data-scale="s">
-                    <p>12. ท่านรู้สึกว่าเป็นเรื่องยาก ที่จะผ่อนคลาย</p>
-                    <label><input type="radio" name="q12" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q12" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q12" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q12" value="3"> 3 - เป็นประจำ</label><br>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                 <div class="question-group hidden" data-question="13" data-scale="d">
-                     <p>13. ท่านรู้สึกเศร้าและหดหู่</p>
-                    <label><input type="radio" name="q13" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q13" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q13" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q13" value="3"> 3 - เป็นประจำ</label><br>
-                     <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                 <div class="question-group hidden" data-question="14" data-scale="s">
-                    <p>14. ท่านไม่ยอมให้สิ่งใด มาขัดขวางการทำในสิ่งที่ต้องทำให้เสร็จ</p>
-                    <label><input type="radio" name="q14" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q14" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q14" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q14" value="3"> 3 - เป็นประจำ</label><br>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                <div class="question-group hidden" data-question="15" data-scale="a">
-                    <p>15. ท่านรู้สึกเหมือน กำลังจะตื่นตระหนก</p>
-                    <label><input type="radio" name="q15" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q15" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q15" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q15" value="3"> 3 - เป็นประจำ</label><br>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                 <div class="question-group hidden" data-question="16" data-scale="d">
-                    <p>16. ท่านไม่สามารถ มีความกระตือรือร้นในเรื่องใด ๆ</p>
-                    <label><input type="radio" name="q16" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q16" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q16" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q16" value="3"> 3 - เป็นประจำ</label><br>
-                     <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                <div class="question-group hidden" data-question="17" data-scale="d">
-                    <p>17. ท่านรู้สึกว่าตนเอง ไม่ค่อยมีคุณค่าในฐานะบุคคลคนหนึ่ง</p>
-                    <label><input type="radio" name="q17" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q17" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q17" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q17" value="3"> 3 - เป็นประจำ</label><br>
-                     <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                <div class="question-group hidden" data-question="18" data-scale="s">
-                    <p>18. ท่านรู้สึกว่าตนเอง ค่อนข้างอ่อนไหว</p>
-                     <label><input type="radio" name="q18" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q18" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q18" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q18" value="3"> 3 - เป็นประจำ</label><br>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                <div class="question-group hidden" data-question="19" data-scale="a">
-                    <p>19. ท่านทราบถึงการทำงาน ของหัวใจตนเอง ทั้ง ๆ ที่ไม่ได้ออกกำลังกาย (เช่น รู้สึกว่าหัวใจเต้นเร็วขึ้น หรือเต้นผิดจังหวะ)</p>
-                    <label><input type="radio" name="q19" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q19" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q19" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q19" value="3"> 3 - เป็นประจำ</label><br>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                 <div class="question-group hidden" data-question="20" data-scale="a">
-                    <p>20. ท่านรู้สึกกลัว โดยไม่มีเหตุผลอันสมควร</p>
-                    <label><input type="radio" name="q20" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q20" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q20" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q20" value="3"> 3 - เป็นประจำ</label><br>
-                    <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-next-question">ถัดไป</button>
-                    </div>
-                </div>
-                 <div class="question-group hidden" data-question="21" data-scale="d">
-                    <p>21. ท่านรู้สึกว่า ชีวิตไม่มีความหมาย</p>
-                     <label><input type="radio" name="q21" value="0" required> 0 - ไม่เคยเลย</label><br>
-                    <label><input type="radio" name="q21" value="1"> 1 - บางครั้ง</label><br>
-                    <label><input type="radio" name="q21" value="2"> 2 - บ่อยครั้ง</label><br>
-                    <label><input type="radio" name="q21" value="3"> 3 - เป็นประจำ</label><br>
-                     <div class="nav-buttons">
-                        <button type="button" class="btn-prev-question">ย้อนกลับ</button>
-                        <button type="button" class="btn-submit-assessment">ส่งแบบประเมิน</button> </div>
-                </div>
-
-                </form>
-        </div>
-
-         <div id="step-processing" class="step hidden">
-            <h2>กำลังประมวลผล</h2>
-            <p>กรุณารอสักครู่...</p>
-            <div class="loader"></div>
-        </div>
-
-
-        <div id="step-results" class="step hidden">
-            <h2>ผลการประเมินเบื้องต้น (DASS-21)</h2>
-            <div class="results-summary">
-                <div class="result-item">
-                    <h3>ภาวะซึมเศร้า <br>(Depression)</h3>
-                    <p>คะแนน: <span id="score-d">-</span></p>
-                    <p>ระดับ: <span id="level-d">-</span></p>
-                </div>
-                <div class="result-item">
-                    <h3>ภาวะวิตกกังวล <br>(Anxiety)</h3>
-                    <p>คะแนน: <span id="score-a">-</span></p>
-                    <p>ระดับ: <span id="level-a">-</span></p>
-                </div>
-                <div class="result-item">
-                    <h3>ความเครียด <br>(Stress)</h3>
-                    <p>คะแนน: <span id="score-s">-</span></p>
-                    <p>ระดับ: <span id="level-s">-</span></p>
-                </div>
-            </div>
-            <div class="disclaimer">
-                <p><strong>ข้อควรระวัง:</strong> ผลลัพธ์นี้เป็นการประเมินเบื้องต้นโดยใช้ DASS-21 และเป็นการจำลอง ไม่สามารถใช้แทนการวินิจฉัยจากแพทย์หรือผู้เชี่ยวชาญ หากท่านมีความกังวลเกี่ยวกับสุขภาพจิต กรุณาปรึกษาผู้เชี่ยวชาญ</p>
-            </div>
-            <button id="btn-show-resources">ดูข้อมูลช่วยเหลือและขั้นตอนถัดไป</button>
-        </div>
-    
-
-        <!-- <div id="step-resources" class="step hidden">
-            <h2>ข้อมูลช่วยเหลือและขั้นตอนถัดไป</h2>
-            <p>ผลการประเมินเบื้องต้นนี้ เป็นข้อมูลส่วนหนึ่งในการดูแลสุขภาวะทางใจของท่าน</p>
-            <p>หากท่านมีคะแนนอยู่ในระดับที่น่ากังวล หรือรู้สึกไม่สบายใจ ต้องการคำปรึกษาเพิ่มเติม สามารถติดต่อ:</p>
-            <ul>
-                <li>สายด่วนสุขภาพจิต 1323 (กรมสุขภาพจิต)</li>
-
-                <li>
-                    <a href="Demo4.html" class="psychologist-button">
-                      🤖 เพื่อนชวนคุย: chatbot
-                    </a>
-                  </li>
-                  
-                <li>
-                    <a href="Demo3.html" class="psychologist-button">
-                        🧠 นัดพบนักจิตวิทยา
-                    </a>
-                </li>
-            </ul>
-            <p>การดูแลสุขภาพจิตเป็นสิ่งสำคัญ โปรดอย่าลังเลที่จะขอความช่วยเหลือเมื่อท่านต้องการ</p>
-            <button id="btn-finish">เสร็จสิ้น</button>
-        </div> -->
+    <title>Mindful Hero - เสริมเกราะใจให้ฮีโร่แนวหน้า</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            scroll-behavior: smooth;
+        }
         
-        <!-- เพิ่มในส่วน Resources -->
-        <div id="step-resources" class="step hidden">
-            <h2>ข้อมูลช่วยเหลือและขั้นตอนถัดไป</h2>
-            <p>ผลการประเมินเบื้องต้นนี้ เป็นข้อมูลส่วนหนึ่งในการดูแลสุขภาวะทางใจของท่าน</p>
-            <p>หากท่านมีคะแนนอยู่ในระดับที่น่ากังวล หรือรู้สึกไม่สบายใจ ต้องการคำปรึกษาเพิ่มเติม สามารถติดต่อ:</p>
-            <ul>
-                <li>สายด่วนสุขภาพจิต 1323 (กรมสุขภาพจิต)</li>
-                <li>
-                    <a href="Demo4.html" id="chatbot-link" class="psychologist-button">
-                        🤖 เพื่อนชวนคุย: chatbot
-                    </a>
-                </li>
-                <li>
-                    <a href="Demo3.html" class="psychologist-button">
-                        🧠 นัดพบนักจิตวิทยา
-                    </a>
-                </li>
-                <li>
-                    <a href="Demo5.html" class="psychologist-button" target="_blank">
-                        📚 คลังความรู้เฉพาะทาง
-                    </a>
-                </li>
-
-            </ul>
-            <p>การดูแลสุขภาพจิตเป็นสิ่งสำคัญ โปรดอย่าลังเลที่จะขอความช่วยเหลือเมื่อท่านต้องการ</p>
-            <button id="btn-finish">เสร็จสิ้น</button>
-        </div>
-
-        <!-- ✅ Popup กล่องแจ้งเตือน -->
-        <div id="chatbot-popup" class="popup hidden">
-        <div class="popup-content">
-            <p>ระบบจะเปิด chatbot ในหน้าต่างใหม่<br>คุณต้องการดำเนินการต่อหรือไม่?</p>
-            <div class="popup-actions">
-            <button id="confirm-chatbot" class="btn-confirm">ตกลง</button>
-            <button id="cancel-chatbot" class="btn-cancel">ยกเลิก</button>
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(23, 107, 135, 0.9) 0%, rgba(100, 179, 152, 0.9) 100%);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .wave-shape {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        
+        .wave-shape svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 150px;
+        }
+        
+        .wave-shape .shape-fill {
+            fill: #FFFFFF;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="text-2xl font-bold text-indigo-700">
+                        <span class="text-indigo-600">Mindful</span><span class="text-green-600">Hero</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-700 hover:text-indigo-600">Feature</a>
+                    <a href="#benefits" class="text-gray-700 hover:text-indigo-600">ประโยชน์</a>
+                    <a href="#about" class="text-gray-700 hover:text-indigo-600">เกี่ยวกับเรา</a>
+                    <a href="assess.html" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-300">Get started</a>
+                </div>
             </div>
         </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white relative overflow-hidden">
+        <div class="wave-shape">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
         </div>
-        <div id="popup-overlay" class="popup-overlay hidden"></div>
+        <div class="container mx-auto px-6 py-24  relative z-10">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0 fade-in">
+                    <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">
+                        <span class="block">Mindful Hero:</span>
+                        <span class="block">เสริมเกราะใจ ให้ฮีโร่แนวหน้า</span>
+                        <span class="block">พร้อมทุกภารกิจ</span>
+                    </h1>
+                    <p class="text-xl mb-8 opacity-90">
+                        แพลตฟอร์มดูแลสุขภาพจิตครบวงจร ออกแบบเฉพาะสำหรับบุคลากรในสายงานความเครียดสูง 
+                        พร้อมเครื่องมือประเมินตนเอง แหล่งความรู้ และการเชื่อมต่อผู้เชี่ยวชาญอย่างเป็นความลับ
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="assess.html" class="px-8 py-4 bg-white text-green-700 font-bold rounded-lg text-center hover:bg-gray-100 transition duration-300 shadow-lg">
+                            Talk to yourself
+                        </a>
+                        <a href="#features" class="px-8 py-4 border-2 border-white text-white font-bold rounded-lg text-center hover:bg-white hover:text-green-700 transition duration-300">
+                            เรียนรู้เพิ่มเติม
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 fade-in">
+                    <img src="FF.JPG" 
+                         alt="Heroes at work" 
+                         class="rounded-xl shadow-2xl border-4 border-white transform rotate-1 hover:rotate-0 transition duration-500">
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Challenge & Solution Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">ความท้าทายที่ 'ฮีโร่' ของคุณต้องเผชิญ</h2>
+                <div class="w-24 h-1 bg-green-600 mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-red-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">ความเครียดสะสมและภาวะหมดไฟ</h3>
+                    </div>
+                    <p class="text-gray-600">
+                        บุคลากรในสายงานแนวหน้าเช่นแพทย์ พยาบาล ตำรวจ และนักดับเพลิง 
+                        มักเผชิญกับความเครียดสูงเป็นประจำ ส่งผลให้เกิดภาวะหมดไฟ (Burnout) 
+                        ความเหนื่อยล้าทางอารมณ์ และประสิทธิภาพการทำงานลดลง
+                    </p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-blue-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-lightbulb text-blue-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Mindful Hero: เพื่อนคู่คิดดูแลใจ</h3>
+                    </div>
+                    <p class="text-gray-600">
+                        เราเข้าใจความท้าทายเหล่านี้เป็นอย่างดี และได้พัฒนาระบบที่เข้าถึงง่าย 
+                        เป็นความลับ และตอบโจทย์เฉพาะสำหรับบุคลากรแนวหน้า 
+                        เพื่อช่วยดูแลสุขภาพจิตตั้งแต่ระยะเริ่มต้นก่อนจะกลายเป็นปัญหาใหญ่
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    </div>
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Featureหลักของ Mindful Hero</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    เครื่องมือครบวงจรที่ออกแบบมาเพื่อเสริมสร้างความแข็งแกร่งทางใจ
+                </p>
+                <div class="w-24 h-1 bg-green-600 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <a href="assess.html" class="feature-card bg-gray-50 p-8 rounded-xl transition duration-300">
+                    <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-brain text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">เข้าใจสภาวะใจตนเอง</h3>
+                    <p class="text-gray-600">
+                        ทำแบบประเมินสุขภาพจิตเบื้องต้น (เช่น DASS-21) ได้ด้วยตนเองอย่างเป็นส่วนตัว 
+                        รู้ผลทันที พร้อมคำแนะนำเบื้องต้นเพื่อการดูแลที่ตรงจุด
+                    </p>
+                </a>
+                
+                <!-- Feature 2 -->
+                <a href="demo5.html" class="feature-card bg-gray-50 p-8 rounded-xl transition duration-300">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-book-open text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">คลังความรู้และเครื่องมือพร้อมใช้</h3>
+                    <p class="text-gray-600">
+                        เข้าถึงบทความ วิดีโอ แบบฝึกหัดการจัดการความเครียด การฝึกสติ 
+                        และเทคนิคผ่อนคลายที่ออกแบบมาเฉพาะสำหรับสายงานของคุณ ทุกที่ทุกเวลา
+                    </p>
+                </a>
+                
+                <!-- Feature 3 -->
+                <a href="demo3.html" class="feature-card bg-gray-50 p-8 rounded-xl transition duration-300">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-comments text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">ปรึกษาผู้เชี่ยวชาญอย่างมั่นใจ</h3>
+                    <p class="text-gray-600">
+                        เลือกเชื่อมต่อและปรึกษานักจิตวิทยาหรือจิตแพทย์ผู้เชี่ยวชาญ 
+                        ที่เข้าใจบริบทการทำงานของคุณ ผ่านระบบออนไลน์ที่สะดวกและปลอดภัย
+                    </p>
+                </a>
+                
+                <!-- Feature 4 -->
+                <a href="demo4.html" class="feature-card bg-gray-50 p-8 rounded-xl transition duration-300">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-robot text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">AI อัจฉริยะเพื่อคุณโดยเฉพาะ</h3>
+                    <p class="text-gray-600">
+                        เทคโนโลยี AI และ Machine Learning ช่วยวิเคราะห์และนำเสนอเนื้อหา/เครื่องมือที่เหมาะสมกับคุณ 
+                        และช่วยระบุสัญญาณความเสี่ยงเบื้องต้นอย่างมีจริยธรรม
+                    </p>
+                </a>
+                
+                <!-- Feature 5 -->
+                <a class="feature-card bg-gray-50 p-8 rounded-xl transition duration-300">
+                    <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-lock text-yellow-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">มั่นใจในความเป็นส่วนตัว</h3>
+                    <p class="text-gray-600">
+                        ข้อมูลของคุณจะถูกเก็บรักษาเป็นความลับสูงสุดตามมาตรฐานสากล (เช่น PDPA) 
+                        และหลักการรักษาความลับในงานจิตวิทยา
+                    </p>
+                </a>
+                
+                <!-- Feature 6 -->
+                <a href="org_dashboard.html" class="feature-card bg-gray-50 p-8 rounded-xl transition duration-300">
+                    <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-bar text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">ข้อมูลเชิงลึกเพื่อองค์กร</h3>
+                    <p class="text-gray-600">
+                        องค์กรจะได้รับรายงานสรุปภาพรวม (แบบไม่ระบุตัวตน) เพื่อให้เห็นแนวโน้มสุขภาวะของบุคลากร 
+                        และนำไปพัฒนานโยบายสนับสนุนได้อย่างมีประสิทธิภาพ
+                    </p>
+                </a>
+            </div>
+        </div>
+    </section>
 
-    <script src="index.js"></script>
+    <!-- Benefits Section -->
+    <section id="benefits" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">ทำไม Mindful Hero จึงเป็นเครื่องมือสำคัญสำหรับองค์กรของคุณ?</h2>
+                <div class="w-24 h-1 bg-green-600 mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Benefit 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-md text-center hover:shadow-lg transition duration-300">
+                    <div class="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-money-bill-wave text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">ลดต้นทุนแฝง</h3>
+                    <p class="text-gray-600 text-sm">
+                        ลดอัตราการลาออก/ขาดงาน ลดค่าใช้จ่ายด้านการรักษาพยาบาลระยะยาว 
+                        และลดความผิดพลาดในการปฏิบัติงาน
+                    </p>
+                </div>
+                
+                <!-- Benefit 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-md text-center hover:shadow-lg transition duration-300">
+                    <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-bolt text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">เพิ่มประสิทธิภาพและความพร้อม</h3>
+                    <p class="text-gray-600 text-sm">
+                        บุคลากรที่มีสุขภาพจิตดี ย่อมทำงานได้อย่างเต็มศักยภาพและพร้อมรับมือทุกสถานการณ์
+                    </p>
+                </div>
+                
+                <!-- Benefit 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-md text-center hover:shadow-lg transition duration-300">
+                    <div class="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-hands-helping text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">แสดงความรับผิดชอบและใส่ใจ</h3>
+                    <p class="text-gray-600 text-sm">
+                        สร้างภาพลักษณ์องค์กรที่ดีที่ใส่ใจสุขภาวะของบุคลากร ดึงดูดและรักษาคนเก่ง
+                    </p>
+                </div>
+                
+                <!-- Benefit 4 -->
+                <div class="bg-white p-6 rounded-xl shadow-md text-center hover:shadow-lg transition duration-300">
+                    <div class="bg-indigo-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user-secret text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">ช่องทางสนับสนุนที่เป็นความลับ</h3>
+                    <p class="text-gray-600 text-sm">
+                        ลดอคติในการขอความช่วยเหลือ บุคลากรกล้าเข้าถึงการดูแลมากขึ้น
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">พัฒนาโดยผู้เชี่ยวชาญและเข้าใจคุณอย่างแท้จริง</h2>
+                <div class="w-24 h-1 bg-green-600 mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Expert team" 
+                         class="rounded-xl shadow-lg w-full max-w-lg mx-auto">
+                </div>
+                <div class="md:w-1/2 md:pl-12">
+                    <p class="text-gray-600 mb-6">
+                        Mindful Hero พัฒนาขึ้นจากความร่วมมือของผู้เชี่ยวชาญด้านสุขภาพจิตและเทคโนโลยี 
+                        โดยคำนึงถึงบริบทและความท้าทายเฉพาะของบุคลากรแนวหน้า
+                    </p>
+                    <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                        <div class="flex items-start">
+                            <div class="bg-green-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-quote-left text-green-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-600 italic mb-2">
+                                    "การดูแลสุขภาพจิตควรเริ่มตั้งแต่ก่อนมีปัญหา Mindful Hero ช่วยให้องค์กรสามารถสนับสนุนบุคลากรได้อย่างทันท่วงที"
+                                </p>
+                                <p class="text-gray-800 font-medium">- ดร. สมจิตต์ ใจดี, นักจิตวิทยาคลินิก</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="text-2xl font-bold mb-4">
+                        <span class="text-indigo-400">Mindful</span><span class="text-green-400">Hero</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        แพลตฟอร์มดูแลสุขภาพจิตครบวงจร สำหรับบุคลากรแนวหน้า
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">ลิงก์ด่วน</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">หน้าหลัก</a></li>
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition duration-300">Feature</a></li>
+                        <li><a href="#benefits" class="text-gray-400 hover:text-white transition duration-300">ประโยชน์</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition duration-300">เกี่ยวกับเรา</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">ข้อมูลเพิ่มเติม</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">นโยบายความเป็นส่วนตัว</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">ข้อกำหนดการใช้งาน</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">คำถามที่พบบ่อย</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">ติดต่อเรา</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3"></i>
+                            <span>123 ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ 10110</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3"></i>
+                            <span>02-123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3"></i>
+                            <span>contact@mindfulhero.co.th</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 Mindful Hero. สงวนลิขสิทธิ์ทุกประการ</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                }
+            });
+        });
+        
+        // Animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeInOnScroll = () => {
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.style.opacity = '1';
+                }
+            });
+        };
+        
+        // Initialize elements as transparent
+        fadeElements.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transition = 'opacity 0.6s ease-out';
+        });
+        
+        // Check on load and scroll
+        window.addEventListener('load', fadeInOnScroll);
+        window.addEventListener('scroll', fadeInOnScroll);
+    </script>
 </body>
 </html>
